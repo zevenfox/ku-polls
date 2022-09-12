@@ -3,6 +3,9 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.http import Http404
 
 from .models import Choice, Question
 
@@ -53,3 +56,15 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+def detail(request, question_id):
+    """Return poll not available or go to detail page."""
+    question = get_object_or_404(Question, pk=question_id)
+    if not question.can_vote():
+            messages.error(request, f'{"Poll not available"}')
+            return redirect("polls:index")
+    else:
+        try:
+            question = get_object_or_404(Question, pk=question_id)
+        except question.DoesNotExist:
+            raise Http404("Poll does not exist")
