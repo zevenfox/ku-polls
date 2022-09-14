@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import Http404
+from django.contrib.auth.decorators import login_required
 
 from .models import Choice, Question
 
@@ -38,7 +39,7 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
-
+@login_required
 def vote(request, question_id):
     """If no vote return to page before and print the message."""
     question = get_object_or_404(Question, pk=question_id)
@@ -58,6 +59,7 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
+@login_required
 def detail(request, question_id):
     """Return poll not available or go to detail page."""
     question = get_object_or_404(Question, pk=question_id)
