@@ -1,13 +1,18 @@
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {% csrf_token %}
     <fieldset>
+        <div style="margin: 20px; border-style: solid;border-radius: 5px;border-width: thick;
+        background-color: rgb(255, 238, 0)">
         <legend><h1>{{ question.question_text }}</h1></legend>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
         {% for choice in question.choice_set.all %}
             <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
             <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
         {% endfor %}
+        <button type="submit" value="Vote" style="text-decoration: none;color:rgb(0, 13, 255)">Submit</button>
+        <button>
+            <a href="{% url 'polls:index' %}" role="button" style="text-decoration: none;color:rgb(0, 13, 255) ">Back to List of Polls</a>
+        </button>
     </fieldset>
-    <input type="submit" value="Vote">
     </form>
 

@@ -1,13 +1,58 @@
 {% load static %}
-
+<html>
+    <head>
+        <style>
+        table, th, td {
+        border: 1px solid rgb(0, 0, 0);
+        }
+        </style>
+        </head>
+<body>
+<h1 title="I'm a header">KU POLLS</h1>
+<h2>Choose Polls</h2>
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
-
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+<table>
+    <tr>
+        <th scope="col">Polls</th>
+        <th scope="col">Vote</th>
+        <th scope="col">Results</th>
+    </tr>
+    <tr>
+        {% if latest_question_list %}
+            {% for question in latest_question_list %}
+            <tr>
+                <td>
+                    {% if question.was_published_recently %}
+                        <h4>{{ question.question_text }}<span class="badge rounded-pill bg-danger"style="margin-left:40px ;font-size: x-small">New</span></h4>
+                </td>
+            </td>
+        {% else %}
+        <h4>{{ question.question_text }}</h4>
+    </td>
+    {% endif %}
+    {% if question.can_vote %}
+        <td>
+            <a class="btn btn-primary btn-sm" href="{% url 'polls:detail' question.id %}" role="button">Vote</a> 
+        </td>
+    {% else %}
+        <td>
+            <button style="background-color: rgb(68, 148, 11); color:white;border: 3px solid #6bd564e0;padding: 7px;border-radius: 3px;cursor: pointer;">
+            <a class="btn btn-primary btn-sm" href="{% url 'polls:detail' question.id %}" role="button">Vote</a>
+            </button>
+        </td>
+{% endif %}
+<td>
+    <button style="background-color: rgb(209, 206, 47); color:white;border: 3px solid #e2ff84;padding: 7px;border-radius: 3px;cursor: pointer;">
+        <a class="btn btn-secondary btn-sm" href="{% url 'polls:results' question.id %}" role="button">Result</a>
+    </button>
+</td>
+            </tr>
+    </tr>
     {% endfor %}
     </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+</table>
+</body>
+</html>
