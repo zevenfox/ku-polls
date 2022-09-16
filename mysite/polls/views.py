@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import Http404
 
+
 from .models import Choice, Question
 
 
@@ -40,6 +41,7 @@ class ResultsView(generic.DetailView):
 
 
 def vote(request, question_id):
+    """If no vote return to page before and print the message."""
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
@@ -56,6 +58,7 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
 
 def detail(request, question_id):
     """Return poll not available or go to detail page."""
