@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.shortcuts import redirect
+from polls import views
 
 
 urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
-    path('', lambda request: redirect('polls/'))
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', lambda request: redirect('polls/')),
+    path('signup/', views.signup, name='signup'),
 ]
