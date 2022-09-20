@@ -20,9 +20,9 @@ from polls import views
 
 
 urlpatterns = [
+    path('', lambda request: redirect('polls/')),
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', lambda request: redirect('polls/')),
     path('signup/', views.signup, name='signup'),
 ]
