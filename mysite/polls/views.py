@@ -1,12 +1,13 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect 
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
-from django.shortcuts import redirect
 from django.http import Http404
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 
 from .models import Choice, Question
 
@@ -39,9 +40,10 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
-
+@login_required
 def vote(request, question_id):
     """If no vote return to page before and print the message."""
+    
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
@@ -59,7 +61,7 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
-
+@login_required
 def detail(request, question_id):
     """Return poll not available or go to detail page."""
     question = get_object_or_404(Question, pk=question_id)
@@ -71,3 +73,20 @@ def detail(request, question_id):
             question = get_object_or_404(Question, pk=question_id)
         except question.DoesNotExist:
             raise Http404("Poll does not exist")
+
+def signup(request):
+    """Register a new user."""
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_passwd = form.cleaned_data.get('password')
+            user = authenticate(username=username,password=raw_passwd)
+            login(request, user)
+            return redirect('polls')
+        # what if form is not valid?
+        # we should display a message in signup.html
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form':form})
