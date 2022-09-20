@@ -1,10 +1,18 @@
-<h1>{{ question.question_text }}</h1>
-
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-{% endfor %}
+{% extends 'base.html' %}
+{% block content %}
+<h1 class ="mb-5 text-center">{{ question.question_text }}</h1>
+  
+<ul class ="list-group mb-5">
+    {% for choice in question.choice_set.all %}
+    <li class ="list-group-item">
+        {{ choice.choice_text }} <span class ="badge badge-success float-right">{{ choice.vote }}
+            vote{{ choice.vote | pluralize }}</span>
+    </li>
+    {% endfor %}
 </ul>
+  
 <button style="background-color: rgb(255, 179, 179); color:rgb(255, 0, 0);border: 3px solid #ff7a7a;padding: 4px;border-radius: 2px;cursor: pointer;">
     <a class="btn btn-secondary btn-sm" href="{% url 'polls:index' %}"role="button" style="text-decoration: none;color:rgb(255, 255, 255) "> Home</a>
 </button>
+
+{% endblock %}

@@ -1,14 +1,16 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block content %}
 <html>
     <head>
         <style>
         table, th, td {
-        border: 1px solid rgb(0, 0, 0);
+        border: 1px solid black;
         }
         </style>
         </head>
 <body>
-<h1 title="I'm a header">KU POLLS</h1>
+<h1 title="I'm a header">Welcome To KU POLLS</h1>
 <h2>Choose Polls</h2>
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 <table>
@@ -32,15 +34,15 @@
     {% endif %}
     {% if question.can_vote %}
         <td>
-            <a class="btn btn-primary btn-sm" href="{% url 'polls:detail' question.id %}" role="button">Vote</a> 
+            <button style="background-color: rgb(68, 148, 11); color:white;border: 3px solid #6bd564e0;padding: 7px;border-radius: 3px;cursor: pointer;">
+                <a class="btn btn-primary btn-sm" href="{% url 'polls:detail' question.id %}" role="button">Vote</a>
+            </button>
         </td>
     {% else %}
         <td>
-            <button style="background-color: rgb(68, 148, 11); color:white;border: 3px solid #6bd564e0;padding: 7px;border-radius: 3px;cursor: pointer;">
-            <a class="btn btn-primary btn-sm" href="{% url 'polls:detail' question.id %}" role="button">Vote</a>
-            </button>
+            <span>Vote Ended</span>
         </td>
-{% endif %}
+    {% endif %}
 <td>
     <button style="background-color: rgb(209, 206, 47); color:white;border: 3px solid #e2ff84;padding: 7px;border-radius: 3px;cursor: pointer;">
         <a class="btn btn-secondary btn-sm" href="{% url 'polls:results' question.id %}" role="button">Result</a>
@@ -49,10 +51,10 @@
             </tr>
     </tr>
     {% endfor %}
-    </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+{% endblock %}
 </table>
 </body>
 </html>
