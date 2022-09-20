@@ -36,15 +36,15 @@ class Choice(models.Model):
     choice_text = models.CharField(max_length=200)
     # votes = models.IntegerField(default=0)
     
+    def __str__(self):
+        """Returns choices."""
+        return self.choice_text
+    
     @property
     def votes(self):
         """Return votes to that choice."""
         return Vote.objects.filter(choice=self).count()
 
-
-    def __str__(self):
-        """Returns choices."""
-        return self.choice_text
 
 class Vote(models.Model):
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
