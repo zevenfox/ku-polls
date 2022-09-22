@@ -38,7 +38,7 @@ class DetailView(generic.DetailView):
         self.object = self.get_object()
         if self.object.can_vote():
             return render(request, 'polls/detail.html', self.get_context_data())
-        else:
+        else: 
             messages.error(request, "Voting is not allowed")
             return redirect('polls:index')
 
