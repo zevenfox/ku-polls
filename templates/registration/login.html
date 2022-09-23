@@ -1,0 +1,41 @@
+{% extends "polls/base.html" %}
+{% block content %}
+<html>
+<body>
+    <style>
+        centerize {
+            height: 300px;
+            width: 400px;
+            background: black;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -250px;
+            margin-left: -200px;
+            border-style: solid;
+            border-radius: 50px;
+            border-width: thick;
+            background-color: white;
+            text-align: center;
+        }
+    </style>
+    <html>
+    <body>
+    <centerize>
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p>
+                <button type="submit" class="btn-primary">Login</button>
+            </p>
+            <input type="hidden" name="next" value="{{ next }}"/>
+        </form>
+{# If you have a password_reset template, then add here #}
+<p>
+<a href="{% url 'password_reset' %}">Forgot password?</a>
+<h4>New user?<a href="{% url 'signup' %}">  Sign up  </a></h4>
+</p>
+</body>
+</html>
+{% endblock %}
