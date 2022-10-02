@@ -19,13 +19,13 @@ Users provided by the initial data (users.json):
 
 | Username  | Password    |
 |-----------|-------------|
-|kupoll01     |   pollza666        |
-|tester007   |  pollza007      |
+|kupoll01     |   pollza666   |
+|tester007   |  pollza007    |
 
 ### For admin
 
 | Username  | Password    |
 |-----------|-------------|
-|kollawat     |     123456789      |
+|kollawat     |  123456789   |
 
 
