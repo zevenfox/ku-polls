@@ -19,7 +19,7 @@ Users provided by the initial data (users.json):
 
 | Username  | Password    |
 |-----------|-------------|
-|kupoll     |     01      |
+|kupoll01     |   pollza666        |
 |tester007   |  pollza007      |
 
 ### For admin
