@@ -11,8 +11,8 @@ class UserAuthTest(django.test.TestCase):
     def setUp(self):
         # superclass setUp creates a Client object and initializes test database
         super().setUp()
-        self.username = "testuser"
-        self.password = "FatChance!"
+        self.username = "kupoll01"
+        self.password = "pollza666"
         self.user1 = User.objects.create_user(
                          username=self.username,
                          password=self.password,
@@ -63,8 +63,8 @@ class UserAuthTest(django.test.TestCase):
         self.assertEqual(200, response.status_code)
         # Can login using a POST request
         # usage: client.post(url, {'key1":"value", "key2":"value"})
-        form_data = {"username": "testuser", 
-                     "password": "FatChance!"
+        form_data = {"username": "kupoll01", 
+                     "password": "pollza666!"
                     }
         response = self.client.post(login_url, form_data)
         self.assertEqual(302, response.status_code)
